@@ -4,21 +4,23 @@ import json
 
 recordings = []
 
-url = "http://research.culturalequity.org/get-audio-detailed-recording.do?recordingId=23457"
+current_page = 0
+
+url = "http://research.culturalequity.org/get-audio-detailed-recording.do?recordingId=21649" #current_page+1
+#problem with while loop ---> how do i loop through each page and then stop the loop?
 
 alan_lomax = requests.get(url)
 page_url = alan_lomax.text
-
 lomax_scrape = BeautifulSoup(page_url, "html.parser")
 
+data = lomax_scrape.find_all(text=True)
 trs = lomax_scrape.find_all("tr")
 
 for recording_info in trs:
-	print(recording_info)
-
-	data = recording_info.find_all("td", attrs={"class": "NormalPad5"})
-	for td in data:
-		print(td.text)
+#print(recording_info)
+	scrape = recording_info.find_all("td")
+	for x in scrape:
+		print(x.text)
 
 	
 
